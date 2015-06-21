@@ -31,7 +31,8 @@ project Examples is
       "syncsub.adb",
       "psenvpub.adb",
       "psenvsub.adb",
-      "identity.adb");
+      "identity.adb",
+      "rtreq.adb");
 
    for Source_Dirs use Src_Dir_List;
    for Object_Dir use "obj";
