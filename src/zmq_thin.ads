@@ -41,7 +41,7 @@ package ZMQ_Thin is
 
    type zmq_msg_t_u_u_array is array (1 .. 64) of Interfaces.C.unsigned_char;
    type zmq_msg_t is record
-      u_u : zmq_msg_t_u_u_array;
+      u_u : zmq_msg_t_u_u_array := (others => 0);
    end record;
    for zmq_msg_t'Alignment use 8;
    pragma Convention (C_Pass_By_Copy, zmq_msg_t);
@@ -119,10 +119,10 @@ package ZMQ_Thin is
    --  Polling
 
    type zmq_pollitem_t is record
-      socket : System.Address;
-      fd : Interfaces.C.int;
-      events : Interfaces.C.short;
-      revents : aliased Interfaces.C.short;
+      socket : System.Address := System.Null_Address;
+      fd : Interfaces.C.int := 0;
+      events : Interfaces.C.short := 0;
+      revents : aliased Interfaces.C.short := 0;
    end record;
    pragma Convention (C_Pass_By_Copy, zmq_pollitem_t);
 

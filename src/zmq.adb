@@ -245,6 +245,7 @@ package body ZMQ is
 
    overriding procedure Initialize (M : in out Message_Type) is
    begin
+      M.Msg_Internals.u_u := (others => 0);
       Setup (M);
    end Initialize;
 
@@ -271,6 +272,7 @@ package body ZMQ is
    is
    begin
       return M : Message_Type do
+         M.Msg_Internals.u_u := (others => 0);
          Setup (M, Size);
       end return;
    end Create_Message;
@@ -305,6 +307,7 @@ package body ZMQ is
    is
    begin
       return M : Message_Type do
+         M.Msg_Internals.u_u := (others => 0);
          Setup (M, Value);
       end return;
    end Create_Message;
@@ -404,9 +407,13 @@ package body ZMQ is
 
       c_size := ZMQ_Thin.zmq_msg_size (M.Msg_Internals'Access);
 
-      return Interfaces.C.Strings.Value (Convert (c_data), c_size);
+      declare
+         Result_Str : String (1 .. Integer (c_size));
+         for Result_Str'Address use c_data;
+      begin
+         return Result_Str;
+      end;
    end Data;
-
 
    function Size (M : in out Message_Type) return Natural
    is
