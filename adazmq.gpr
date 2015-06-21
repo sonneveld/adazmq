@@ -1,0 +1,24 @@
+with "./common.gpr";
+with "zmq_lib.gpr";
+with "gnatcoll";
+
+project AdaZMQ is
+
+   Src_Dir_List := ("src/**");
+
+   for Library_Name use "adazmq";
+   for Library_Dir use "lib";
+   for Library_Kind use "static";
+
+   for Source_Dirs use Src_Dir_List;
+   for Object_Dir use "obj";
+   for Exec_Dir use "bin";
+
+   package Compiler is
+      for Default_Switches ("ada") use Common.Compiler'Default_Switches ("ada");
+   end Compiler;
+
+   package Builder renames Common.Builder;
+   package Binder renames Common.Binder;
+
+end AdaZMQ;

@@ -1,0 +1,9 @@
+project ZMQ_Lib is
+
+   for Source_Files use ();
+   for Library_Dir use "/usr/local/lib";
+   for Library_Name use "zmq";
+   for Library_Kind use "relocatable";
+   for Externally_Built use "true";
+
+end ZMQ_Lib;
