@@ -1,0 +1,46 @@
+with "../common.gpr";
+with "../adazmq.gpr";
+
+project Examples is
+
+   for Languages use ("Ada");
+   Src_Dir_List := ("src/**");
+
+   for Main use
+      ("hwserver.adb",
+      "hwclient.adb",
+      "version.adb",
+      "wuserver.adb",
+      "wuclient.adb",
+      "taskvent.adb",
+      "taskwork.adb",
+      "tasksink.adb",
+      "msreader.adb",
+      "mspoller.adb",
+      "rrclient.adb",
+      "rrworker.adb",
+      "rrbroker.adb",
+      "msgqueue.adb",
+      "wuproxy.adb",
+      "taskwork2.adb",
+      "tasksink2.adb",
+      --  "interrupt.adb",
+      "mtserver.adb",
+      "mtrelay.adb",
+      "syncpub.adb",
+      "syncsub.adb",
+      "psenvpub.adb",
+      "psenvsub.adb");
+
+   for Source_Dirs use Src_Dir_List;
+   for Object_Dir use "obj";
+   for Exec_Dir use "bin";
+
+   package Compiler is
+      for Default_Switches ("ada") use Common.Compiler'Default_Switches ("ada");
+   end Compiler;
+
+   package Builder renames Common.Builder;
+   package Binder renames Common.Binder;
+
+end Examples;
