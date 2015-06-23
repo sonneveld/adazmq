@@ -1,7 +1,9 @@
+with "./config.gpr";
+
 project ZMQ_Lib is
 
    for Source_Files use ();
-   for Library_Dir use "/usr/local/lib";
+   for Library_Dir use Config.ZMQ_Library_Dir;
    for Library_Name use "zmq";
    for Library_Kind use "relocatable";
    for Externally_Built use "true";
