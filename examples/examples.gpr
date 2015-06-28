@@ -33,7 +33,8 @@ project Examples is
       "psenvsub.adb",
       "identity.adb",
       "rtreq.adb",
-      "rtdealer.adb");
+      "rtdealer.adb",
+      "lbbroker.adb");
 
    for Source_Dirs use Src_Dir_List;
    for Object_Dir use "obj";
