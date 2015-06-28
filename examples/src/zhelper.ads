@@ -9,6 +9,7 @@ package ZHelper is
    procedure Dump (S : ZMQ.Socket_Type'Class);
    --  Receives all message parts from socket, prints neatly
 
+   function Set_Id (S : ZMQ.Socket_Type'Class) return String;
    procedure Set_Id (S : ZMQ.Socket_Type'Class);
    --  Set simple random printable identity on socket
 

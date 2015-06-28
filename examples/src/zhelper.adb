@@ -3,6 +3,7 @@ with Ada.Numerics.Float_Random;
 with Ada.Text_IO;
 with Ada.Unchecked_Conversion;
 with GNAT.Formatted_String;
+with GNAT.Task_Lock;
 
 use type GNAT.Formatted_String.Formatted_String;
 
@@ -65,11 +66,38 @@ package body ZHelper is
       end loop Read_Loop;
    end Dump;
 
+   --  Id_Count and Task_Lock malarkey ensure that ids are unique.
+
+   Next_Id_Value : Natural := 1;
+
+   function Set_Id (S : ZMQ.Socket_Type'Class) return String
+   is
+      Id_Base : Natural;
+   begin
+      begin
+         GNAT.Task_Lock.Lock;
+         Id_Base := Next_Id_Value;
+         Next_Id_Value := Next_Id_Value + 1;
+         GNAT.Task_Lock.Unlock;
+      exception
+         when others =>
+            GNAT.Task_Lock.Unlock;
+            raise;
+      end;
+
+      declare
+         Identity : constant String := -(+"%04X-%04X"&Rand_Of (1, 16#10000#)&Id_Base);
+      begin
+         S.Set_Sock_Opt (ZMQ.ZMQ_IDENTITY, Identity);
+         return Identity;
+      end;
+   end Set_Id;
+
    procedure Set_Id (S : ZMQ.Socket_Type'Class)
    is
-      Identity : constant String := -(+"%04X-%04X"&Rand_Of (1, 16#10000#)&Rand_Of (1, 16#10000#));
+      Dummy : String := Set_Id (S);
    begin
-      S.Set_Sock_Opt (ZMQ.ZMQ_IDENTITY, Identity);
+      null;
    end Set_Id;
 
 end ZHelper;
